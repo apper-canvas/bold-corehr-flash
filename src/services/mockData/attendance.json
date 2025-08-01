@@ -1,0 +1,132 @@
+[
+  {
+    "Id": 1,
+    "employeeId": "1",
+    "date": "2024-01-15T00:00:00.000Z",
+    "clockIn": "2024-01-15T09:00:00.000Z",
+    "clockOut": "2024-01-15T17:30:00.000Z",
+    "status": "Present",
+    "totalHours": 8.5,
+    "breakMinutes": 60
+  },
+  {
+    "Id": 2,
+    "employeeId": "2",
+    "date": "2024-01-15T00:00:00.000Z",
+    "clockIn": "2024-01-15T08:45:00.000Z",
+    "clockOut": "2024-01-15T17:15:00.000Z",
+    "status": "Present",
+    "totalHours": 8.5,
+    "breakMinutes": 60
+  },
+  {
+    "Id": 3,
+    "employeeId": "3",
+    "date": "2024-01-15T00:00:00.000Z",
+    "clockIn": "2024-01-15T09:15:00.000Z",
+    "clockOut": "2024-01-15T18:00:00.000Z",
+    "status": "Present",
+    "totalHours": 8.75,
+    "breakMinutes": 60
+  },
+  {
+    "Id": 4,
+    "employeeId": "1",
+    "date": "2024-01-16T00:00:00.000Z",
+    "clockIn": "2024-01-16T09:10:00.000Z",
+    "clockOut": "2024-01-16T17:45:00.000Z",
+    "status": "Present",
+    "totalHours": 8.58,
+    "breakMinutes": 60
+  },
+  {
+    "Id": 5,
+    "employeeId": "2",
+    "date": "2024-01-16T00:00:00.000Z",
+    "clockIn": null,
+    "clockOut": null,
+    "status": "Absent",
+    "totalHours": 0,
+    "breakMinutes": 0
+  },
+  {
+    "Id": 6,
+    "employeeId": "4",
+    "date": "2024-01-15T00:00:00.000Z",
+    "clockIn": "2024-01-15T08:30:00.000Z",
+    "clockOut": "2024-01-15T16:30:00.000Z",
+    "status": "Present",
+    "totalHours": 8,
+    "breakMinutes": 60
+  },
+  {
+    "Id": 7,
+    "employeeId": "5",
+    "date": "2024-01-15T00:00:00.000Z",
+    "clockIn": "2024-01-15T09:30:00.000Z",
+    "clockOut": "2024-01-15T18:15:00.000Z",
+    "status": "Present",
+    "totalHours": 8.75,
+    "breakMinutes": 60
+  },
+  {
+    "Id": 8,
+    "employeeId": "6",
+    "date": "2024-01-15T00:00:00.000Z",
+    "clockIn": "2024-01-15T08:45:00.000Z",
+    "clockOut": "2024-01-15T17:00:00.000Z",
+    "status": "Present",
+    "totalHours": 8.25,
+    "breakMinutes": 60
+  },
+  {
+    "Id": 9,
+    "employeeId": "7",
+    "date": "2024-01-15T00:00:00.000Z",
+    "clockIn": "2024-01-15T09:00:00.000Z",
+    "clockOut": "2024-01-15T17:30:00.000Z",
+    "status": "Present",
+    "totalHours": 8.5,
+    "breakMinutes": 60
+  },
+  {
+    "Id": 10,
+    "employeeId": "8",
+    "date": "2024-01-15T00:00:00.000Z",
+    "clockIn": "2024-01-15T08:15:00.000Z",
+    "clockOut": "2024-01-15T16:45:00.000Z",
+    "status": "Present",
+    "totalHours": 8.5,
+    "breakMinutes": 60
+  },
+  {
+    "Id": 11,
+    "employeeId": "9",
+    "date": "2024-01-15T00:00:00.000Z",
+    "clockIn": "2024-01-15T09:20:00.000Z",
+    "clockOut": "2024-01-15T18:20:00.000Z",
+    "status": "Present",
+    "totalHours": 9,
+    "breakMinutes": 60
+  },
+  {
+    "Id": 12,
+    "employeeId": "10",
+    "date": "2024-01-15T00:00:00.000Z",
+    "clockIn": null,
+    "clockOut": null,
+    "status": "On Leave",
+    "totalHours": 0,
+    "breakMinutes": 0
+  },
+  {
+    "Id": 13,
+    "employeeId": "1",
+    "date": "2024-01-17T00:00:00.000Z",
+    "clockIn": "2024-01-17T08:55:00.000Z",
+    "clockOut": null,
+    "status": "Clocked In",
+    "totalHours": 0,
+    "breakMinutes": 0
+  }
+]
