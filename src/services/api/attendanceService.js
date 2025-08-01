@@ -204,11 +204,11 @@ export const attendanceService = {
         
         return successfulRecords.length > 0 ? successfulRecords[0].data : null
       }
-    } catch (error) {
+} catch (error) {
       if (error?.response?.data?.message) {
-        console.error("Error clocking in:", error?.response?.data?.message)
+        console.error(`Attendance Service - Error clocking in: ${error?.response?.data?.message}`)
       } else {
-        console.error(error.message)
+        console.error(`Attendance Service - Clock in error: ${error.message}`)
       }
       throw error
     }
@@ -272,10 +272,10 @@ export const attendanceService = {
         return successfulUpdates.length > 0 ? successfulUpdates[0].data : null
       }
     } catch (error) {
-      if (error?.response?.data?.message) {
-        console.error("Error clocking out:", error?.response?.data?.message)
+if (error?.response?.data?.message) {
+        console.error(`Attendance Service - Error clocking out: ${error?.response?.data?.message}`)
       } else {
-        console.error(error.message)
+        console.error(`Attendance Service - Clock out error: ${error.message}`)
       }
       throw error
     }
