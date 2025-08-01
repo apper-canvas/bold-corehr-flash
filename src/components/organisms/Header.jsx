@@ -1,11 +1,16 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
+import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 import ApperIcon from "@/components/ApperIcon"
 import Avatar from "@/components/atoms/Avatar"
 import Button from "@/components/atoms/Button"
+import { AuthContext } from "@/App"
 
 const Header = ({ onMenuToggle }) => {
   const [showUserMenu, setShowUserMenu] = useState(false)
-
+  const navigate = useNavigate()
+  const { logout } = useContext(AuthContext)
+  const { user, isAuthenticated } = useSelector((state) => state.user)
   return (
     <header className="bg-white border-b border-slate-200 px-4 lg:px-6 h-16 flex items-center justify-between">
       <div className="flex items-center gap-4">
@@ -31,7 +36,7 @@ const Header = ({ onMenuToggle }) => {
           <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
         </Button>
 
-        <div className="relative">
+<div className="relative">
           <Button
             variant="ghost"
             size="sm"
@@ -39,26 +44,49 @@ const Header = ({ onMenuToggle }) => {
             className="flex items-center gap-2"
           >
             <Avatar
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
+              src={user?.avatar_c || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"}
               alt="User Avatar"
               size="sm"
             />
-            <span className="hidden sm:block text-sm font-medium">John Admin</span>
+            <span className="hidden sm:block text-sm font-medium">
+              {isAuthenticated && user ? 
+                (user.firstName && user.lastName ? 
+                  `${user.firstName} ${user.lastName}` : 
+                  user.emailAddress || 'User'
+                ) : 
+                'User'
+              }
+            </span>
             <ApperIcon name="ChevronDown" size={16} />
           </Button>
 
-          {showUserMenu && (
+{showUserMenu && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-slate-200 py-1 z-50">
-              <a href="#" className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+              <button 
+                onClick={() => {
+                  navigate('/profile')
+                  setShowUserMenu(false)
+                }}
+                className="block w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+              >
                 Profile Settings
-              </a>
-              <a href="#" className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+              </button>
+              <button 
+                onClick={() => setShowUserMenu(false)}
+                className="block w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+              >
                 Preferences
-              </a>
+              </button>
               <hr className="my-1" />
-              <a href="#" className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+              <button 
+                onClick={() => {
+                  logout()
+                  setShowUserMenu(false)
+                }}
+                className="block w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+              >
                 Sign Out
-              </a>
+              </button>
             </div>
           )}
         </div>
