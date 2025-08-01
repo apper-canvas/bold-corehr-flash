@@ -183,46 +183,46 @@ const Attendance = () => {
                 />
               ) : (
                 todayAttendance.map((record) => (
-                  <div key={record.Id} className="flex items-center justify-between p-4 hover:bg-slate-50 rounded-lg transition-colors duration-200">
-                    <div className="flex items-center gap-4">
-                      <Avatar
-                        src={record.employee?.avatar}
-                        fallback={record.employee ? `${record.employee.firstName[0]}${record.employee.lastName[0]}` : "??"}
-                        alt={record.employee ? `${record.employee.firstName} ${record.employee.lastName}` : "Unknown"}
-                        size="md"
-                      />
-                      <div>
-                        <p className="font-medium text-slate-900">
-                          {record.employee ? `${record.employee.firstName} ${record.employee.lastName}` : "Unknown Employee"}
-                        </p>
-                        <p className="text-sm text-slate-500">
-                          {record.employee?.department} • {record.employee?.role}
-                        </p>
-                        <div className="flex items-center gap-4 mt-1">
-                          <div className="flex items-center gap-1 text-xs text-slate-500">
-                            <ApperIcon name="LogIn" size={12} />
-                            {record.clockIn ? format(new Date(record.clockIn), "h:mm a") : "-"}
-                          </div>
-                          <div className="flex items-center gap-1 text-xs text-slate-500">
-                            <ApperIcon name="LogOut" size={12} />
-                            {record.clockOut ? format(new Date(record.clockOut), "h:mm a") : "-"}
-                          </div>
+<div key={record.Id} className="flex items-center justify-between p-4 hover:bg-slate-50 rounded-lg transition-colors duration-200">
+                  <div className="flex items-center gap-4">
+                    <Avatar
+                      src={record.employee?.avatar_c}
+                      fallback={record.employee ? `${record.employee.firstName_c?.[0] || ''}${record.employee.lastName_c?.[0] || ''}` : "??"}
+                      alt={record.employee ? `${record.employee.firstName_c || ''} ${record.employee.lastName_c || ''}` : "Unknown"}
+                      size="md"
+                    />
+                    <div>
+                      <p className="font-medium text-slate-900">
+                        {record.employee ? `${record.employee.firstName_c || ''} ${record.employee.lastName_c || ''}` : "Unknown Employee"}
+                      </p>
+                      <p className="text-sm text-slate-500">
+                        {record.employee?.department_c} • {record.employee?.role_c}
+                      </p>
+                      <div className="flex items-center gap-4 mt-1">
+                        <div className="flex items-center gap-1 text-xs text-slate-500">
+                          <ApperIcon name="LogIn" size={12} />
+                          {record.clockIn_c ? format(new Date(record.clockIn_c), "h:mm a") : "-"}
+                        </div>
+                        <div className="flex items-center gap-1 text-xs text-slate-500">
+                          <ApperIcon name="LogOut" size={12} />
+                          {record.clockOut_c ? format(new Date(record.clockOut_c), "h:mm a") : "-"}
                         </div>
                       </div>
                     </div>
-                    
-                    <div className="text-right">
-                      <Badge variant={getAttendanceStatusVariant(record.status)}>
-                        <ApperIcon name={getStatusIcon(record.status)} size={12} className="mr-1" />
-                        {record.status}
-                      </Badge>
-                      {record.totalHours > 0 && (
-                        <p className="text-sm text-slate-600 mt-1 font-medium">
-                          {record.totalHours}h worked
-                        </p>
-                      )}
-                    </div>
                   </div>
+                    
+<div className="text-right">
+                    <Badge variant={getAttendanceStatusVariant(record.status_c)}>
+                      <ApperIcon name={getStatusIcon(record.status_c)} size={12} className="mr-1" />
+                      {record.status_c}
+                    </Badge>
+                    {(record.totalHours_c || 0) > 0 && (
+                      <p className="text-sm text-slate-600 mt-1 font-medium">
+                        {record.totalHours_c}h worked
+                      </p>
+                    )}
+                  </div>
+                </div>
                 ))
               )}
             </div>

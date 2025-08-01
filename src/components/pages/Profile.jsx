@@ -37,13 +37,13 @@ const Profile = () => {
       
       setEmployee(empData)
       setLeaveBalance(balance)
-      setFormData({
-        firstName: empData.firstName,
-        lastName: empData.lastName,
-        email: empData.email,
-        phone: empData.phone,
-        address: empData.address,
-        emergencyContact: empData.emergencyContact
+setFormData({
+        firstName: empData.firstName_c,
+        lastName: empData.lastName_c,
+        email: empData.email_c,
+        phone: empData.phone_c,
+        address: empData.address_c,
+        emergencyContact: empData.emergencyContact_c
       })
     } catch (err) {
       setError(err.message || "Failed to load profile data")
@@ -56,9 +56,16 @@ const Profile = () => {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
-  const handleSave = async () => {
+const handleSave = async () => {
     try {
-      await employeeService.update(currentUserId, formData)
+      await employeeService.update(currentUserId, {
+        firstName_c: formData.firstName,
+        lastName_c: formData.lastName,
+        email_c: formData.email,
+        phone_c: formData.phone,
+        address_c: formData.address,
+        emergencyContact_c: formData.emergencyContact
+      })
       await loadProfileData()
       setIsEditing(false)
       toast.success("Profile updated successfully!")
@@ -67,14 +74,14 @@ const Profile = () => {
     }
   }
 
-  const handleCancel = () => {
+const handleCancel = () => {
     setFormData({
-      firstName: employee.firstName,
-      lastName: employee.lastName,
-      email: employee.email,
-      phone: employee.phone,
-      address: employee.address,
-      emergencyContact: employee.emergencyContact
+      firstName: employee.firstName_c,
+      lastName: employee.lastName_c,
+      email: employee.email_c,
+      phone: employee.phone_c,
+      address: employee.address_c,
+      emergencyContact: employee.emergencyContact_c
     })
     setIsEditing(false)
   }
@@ -108,25 +115,25 @@ const Profile = () => {
         <div className="lg:col-span-2">
           <div className="card p-6">
             <div className="flex items-center gap-6 mb-6">
-              <Avatar
-                src={employee.avatar}
-                fallback={`${employee.firstName[0]}${employee.lastName[0]}`}
-                alt={`${employee.firstName} ${employee.lastName}`}
-                size="xl"
-              />
-              <div>
-                <h2 className="text-xl font-bold text-slate-900">
-                  {employee.firstName} {employee.lastName}
-                </h2>
-                <p className="text-slate-600">{employee.role}</p>
-                <p className="text-sm text-slate-500">{employee.employeeId}</p>
-                <div className="flex items-center gap-2 mt-2">
-                  <ApperIcon name="Calendar" size={14} className="text-slate-400" />
-                  <span className="text-sm text-slate-500">
-                    Joined {format(new Date(employee.joinDate), "MMMM yyyy")}
-                  </span>
-                </div>
+<Avatar
+              src={employee.avatar_c}
+              fallback={`${employee.firstName_c?.[0] || ''}${employee.lastName_c?.[0] || ''}`}
+              alt={`${employee.firstName_c || ''} ${employee.lastName_c || ''}`}
+              size="xl"
+            />
+            <div>
+              <h2 className="text-xl font-bold text-slate-900">
+                {employee.firstName_c || ''} {employee.lastName_c || ''}
+              </h2>
+              <p className="text-slate-600">{employee.role_c}</p>
+              <p className="text-sm text-slate-500">{employee.employeeId_c}</p>
+              <div className="flex items-center gap-2 mt-2">
+                <ApperIcon name="Calendar" size={14} className="text-slate-400" />
+                <span className="text-sm text-slate-500">
+                  Joined {employee.joinDate_c ? format(new Date(employee.joinDate_c), "MMMM yyyy") : "N/A"}
+                </span>
               </div>
+            </div>
             </div>
 
             {isEditing ? (
@@ -191,38 +198,38 @@ const Profile = () => {
                   <div>
                     <h4 className="font-semibold text-slate-900 mb-3">Contact Information</h4>
                     <div className="space-y-3">
-                      <div className="flex items-center gap-2">
-                        <ApperIcon name="Mail" size={16} className="text-slate-400" />
-                        <span className="text-sm text-slate-600">{employee.email}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <ApperIcon name="Phone" size={16} className="text-slate-400" />
-                        <span className="text-sm text-slate-600">{employee.phone}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <ApperIcon name="MapPin" size={16} className="text-slate-400" />
-                        <span className="text-sm text-slate-600">{employee.address}</span>
-                      </div>
+<div className="flex items-center gap-2">
+                      <ApperIcon name="Mail" size={16} className="text-slate-400" />
+                      <span className="text-sm text-slate-600">{employee.email_c}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <ApperIcon name="Phone" size={16} className="text-slate-400" />
+                      <span className="text-sm text-slate-600">{employee.phone_c}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <ApperIcon name="MapPin" size={16} className="text-slate-400" />
+                      <span className="text-sm text-slate-600">{employee.address_c}</span>
                     </div>
                   </div>
-                  
-                  <div>
-                    <h4 className="font-semibold text-slate-900 mb-3">Work Information</h4>
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-2">
-                        <ApperIcon name="Building2" size={16} className="text-slate-400" />
-                        <span className="text-sm text-slate-600">{employee.department}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <ApperIcon name="Briefcase" size={16} className="text-slate-400" />
-                        <span className="text-sm text-slate-600">{employee.role}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <ApperIcon name="Phone" size={16} className="text-slate-400" />
-                        <span className="text-sm text-slate-600">Emergency: {employee.emergencyContact}</span>
-                      </div>
+                </div>
+                
+                <div>
+                  <h4 className="font-semibold text-slate-900 mb-3">Work Information</h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <ApperIcon name="Building2" size={16} className="text-slate-400" />
+                      <span className="text-sm text-slate-600">{employee.department_c}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <ApperIcon name="Briefcase" size={16} className="text-slate-400" />
+                      <span className="text-sm text-slate-600">{employee.role_c}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <ApperIcon name="Phone" size={16} className="text-slate-400" />
+                      <span className="text-sm text-slate-600">Emergency: {employee.emergencyContact_c}</span>
                     </div>
                   </div>
+                </div>
                 </div>
               </div>
             )}
@@ -265,8 +272,8 @@ const Profile = () => {
                   <ApperIcon name="Calendar" size={16} className="text-slate-400" />
                   <span className="text-sm text-slate-600">Years with Company</span>
                 </div>
-                <span className="font-semibold text-slate-900">
-                  {Math.floor((new Date() - new Date(employee.joinDate)) / (365.25 * 24 * 60 * 60 * 1000))} years
+<span className="font-semibold text-slate-900">
+                  {employee.joinDate_c ? Math.floor((new Date() - new Date(employee.joinDate_c)) / (365.25 * 24 * 60 * 60 * 1000)) : 0} years
                 </span>
               </div>
               
@@ -276,7 +283,7 @@ const Profile = () => {
                   <span className="text-sm text-slate-600">Annual Salary</span>
                 </div>
                 <span className="font-semibold text-slate-900">
-                  ${employee.salary?.toLocaleString() || "N/A"}
+                  ${employee.salary_c?.toLocaleString() || "N/A"}
                 </span>
               </div>
               
@@ -284,11 +291,11 @@ const Profile = () => {
                 <div className="flex items-center gap-2">
                   <ApperIcon name="CheckCircle" size={16} className="text-slate-400" />
                   <span className="text-sm text-slate-600">Status</span>
-                </div>
-                <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
-                  {employee.status}
+<span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
+                  {employee.status_c}
                 </span>
               </div>
+            </div>
             </div>
           </div>
         </div>

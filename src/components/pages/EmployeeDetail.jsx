@@ -99,10 +99,10 @@ const EmployeeDetail = () => {
       {/* Employee Info */}
       <div className="card-gradient p-6">
         <div className="flex flex-col md:flex-row md:items-start gap-6">
-          <Avatar
-            src={employee.avatar}
-            fallback={`${employee.firstName[0]}${employee.lastName[0]}`}
-            alt={`${employee.firstName} ${employee.lastName}`}
+<Avatar
+            src={employee.avatar_c}
+            fallback={`${employee.firstName_c?.[0] || ''}${employee.lastName_c?.[0] || ''}`}
+            alt={`${employee.firstName_c || ''} ${employee.lastName_c || ''}`}
             size="xl"
           />
           
@@ -110,44 +110,44 @@ const EmployeeDetail = () => {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
               <div>
                 <h1 className="text-2xl font-bold text-slate-900">
-                  {employee.firstName} {employee.lastName}
+                  {employee.firstName_c || ''} {employee.lastName_c || ''}
                 </h1>
-                <p className="text-lg text-slate-600">{employee.role}</p>
-                <p className="text-sm text-slate-500">{employee.employeeId}</p>
+                <p className="text-lg text-slate-600">{employee.role_c}</p>
+                <p className="text-sm text-slate-500">{employee.employeeId_c}</p>
               </div>
-              <Badge variant={getStatusVariant(employee.status)} className="self-start">
-                {employee.status}
+              <Badge variant={getStatusVariant(employee.status_c)} className="self-start">
+                {employee.status_c}
               </Badge>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div className="flex items-center gap-2">
+<div className="flex items-center gap-2">
                 <ApperIcon name="Mail" size={16} className="text-slate-400" />
-                <span className="text-sm text-slate-600">{employee.email}</span>
+                <span className="text-sm text-slate-600">{employee.email_c}</span>
               </div>
               <div className="flex items-center gap-2">
                 <ApperIcon name="Phone" size={16} className="text-slate-400" />
-                <span className="text-sm text-slate-600">{employee.phone}</span>
+                <span className="text-sm text-slate-600">{employee.phone_c}</span>
               </div>
               <div className="flex items-center gap-2">
                 <ApperIcon name="Building2" size={16} className="text-slate-400" />
-                <span className="text-sm text-slate-600">{employee.department}</span>
+                <span className="text-sm text-slate-600">{employee.department_c}</span>
               </div>
               <div className="flex items-center gap-2">
                 <ApperIcon name="Calendar" size={16} className="text-slate-400" />
                 <span className="text-sm text-slate-600">
-                  Joined {format(new Date(employee.joinDate), "MMM dd, yyyy")}
+                  Joined {employee.joinDate_c ? format(new Date(employee.joinDate_c), "MMM dd, yyyy") : "N/A"}
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <ApperIcon name="DollarSign" size={16} className="text-slate-400" />
                 <span className="text-sm text-slate-600">
-                  ${employee.salary?.toLocaleString() || "N/A"}
+                  ${employee.salary_c?.toLocaleString() || "N/A"}
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <ApperIcon name="MapPin" size={16} className="text-slate-400" />
-                <span className="text-sm text-slate-600 truncate">{employee.address}</span>
+                <span className="text-sm text-slate-600 truncate">{employee.address_c}</span>
               </div>
             </div>
           </div>
@@ -191,21 +191,21 @@ const EmployeeDetail = () => {
               recentLeaves.map((leave) => (
                 <div key={leave.Id} className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition-colors duration-200">
                   <div>
-                    <p className="font-medium text-slate-900">{leave.type}</p>
-                    <p className="text-sm text-slate-500">
-                      {format(new Date(leave.startDate), "MMM dd")} - {format(new Date(leave.endDate), "MMM dd")}
-                    </p>
+<p className="font-medium text-slate-900">{leave.type_c}</p>
+                      <p className="text-sm text-slate-500">
+                        {format(new Date(leave.startDate_c), "MMM dd")} - {format(new Date(leave.endDate_c), "MMM dd")}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <Badge variant={getLeaveStatusVariant(leave.status_c)}>
+                        {leave.status_c}
+                      </Badge>
+                      <p className="text-xs text-slate-500 mt-1">
+                        {leave.days_c} day{leave.days_c !== 1 ? "s" : ""}
+                      </p>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <Badge variant={getLeaveStatusVariant(leave.status)}>
-                      {leave.status}
-                    </Badge>
-                    <p className="text-xs text-slate-500 mt-1">
-                      {leave.days} day{leave.days !== 1 ? "s" : ""}
-                    </p>
-                  </div>
-                </div>
-              ))
+                ))
             )}
           </div>
         </div>
@@ -235,25 +235,25 @@ const EmployeeDetail = () => {
                 </tr>
               ) : (
                 attendance.map((record) => (
-                  <tr key={record.Id} className="border-b border-slate-100 hover:bg-slate-50">
-                    <td className="py-3 px-4">
-                      {format(new Date(record.date), "MMM dd, yyyy")}
-                    </td>
-                    <td className="py-3 px-4">
-                      {record.clockIn ? format(new Date(record.clockIn), "h:mm a") : "-"}
-                    </td>
-                    <td className="py-3 px-4">
-                      {record.clockOut ? format(new Date(record.clockOut), "h:mm a") : "-"}
-                    </td>
-                    <td className="py-3 px-4">
-                      {record.totalHours > 0 ? `${record.totalHours}h` : "-"}
-                    </td>
-                    <td className="py-3 px-4">
-                      <Badge variant={getAttendanceStatusVariant(record.status)}>
-                        {record.status}
-                      </Badge>
-                    </td>
-                  </tr>
+<tr key={record.Id} className="border-b border-slate-100 hover:bg-slate-50">
+                  <td className="py-3 px-4">
+                    {format(new Date(record.date_c), "MMM dd, yyyy")}
+                  </td>
+                  <td className="py-3 px-4">
+                    {record.clockIn_c ? format(new Date(record.clockIn_c), "h:mm a") : "-"}
+                  </td>
+                  <td className="py-3 px-4">
+                    {record.clockOut_c ? format(new Date(record.clockOut_c), "h:mm a") : "-"}
+                  </td>
+                  <td className="py-3 px-4">
+                    {(record.totalHours_c || 0) > 0 ? `${record.totalHours_c}h` : "-"}
+                  </td>
+                  <td className="py-3 px-4">
+                    <Badge variant={getAttendanceStatusVariant(record.status_c)}>
+                      {record.status_c}
+                    </Badge>
+                  </td>
+                </tr>
                 ))
               )}
             </tbody>

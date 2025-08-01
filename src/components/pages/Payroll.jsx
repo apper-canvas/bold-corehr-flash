@@ -1,14 +1,15 @@
-import { useState, useEffect } from "react"
-import Button from "@/components/atoms/Button"
-import FilterSelect from "@/components/molecules/FilterSelect"
-import Loading from "@/components/ui/Loading"
-import Error from "@/components/ui/Error"
-import Empty from "@/components/ui/Empty"
-import Avatar from "@/components/atoms/Avatar"
-import ApperIcon from "@/components/ApperIcon"
-import { payrollService } from "@/services/api/payrollService"
-import { format } from "date-fns"
-import { toast } from "react-toastify"
+import React, { useEffect, useState } from "react";
+import { format } from "date-fns";
+import { toast } from "react-toastify";
+import { payrollService } from "@/services/api/payrollService";
+import ApperIcon from "@/components/ApperIcon";
+import FilterSelect from "@/components/molecules/FilterSelect";
+import Loading from "@/components/ui/Loading";
+import Error from "@/components/ui/Error";
+import Empty from "@/components/ui/Empty";
+import Employees from "@/components/pages/Employees";
+import Button from "@/components/atoms/Button";
+import Avatar from "@/components/atoms/Avatar";
 
 const Payroll = () => {
   const [payrollRecords, setPayrollRecords] = useState([])
@@ -251,49 +252,49 @@ const Payroll = () => {
               <tbody className="bg-white divide-y divide-slate-200">
                 {payrollRecords.map((record) => (
                   <tr key={record.Id} className="hover:bg-slate-50 transition-colors duration-200">
-                    <td className="px-6 py-4 whitespace-nowrap">
+<td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <Avatar
-                          src={record.employee?.avatar}
-                          fallback={record.employee ? `${record.employee.firstName[0]}${record.employee.lastName[0]}` : "??"}
-                          alt={record.employee ? `${record.employee.firstName} ${record.employee.lastName}` : "Unknown"}
+                          src={record.employee?.avatar_c}
+                          fallback={record.employee ? `${record.employee.firstName_c?.[0] || ''}${record.employee.lastName_c?.[0] || ''}` : "??"}
+                          alt={record.employee ? `${record.employee.firstName_c || ''} ${record.employee.lastName_c || ''}` : "Unknown"}
                           size="sm"
                         />
                         <div className="ml-3">
                           <div className="text-sm font-medium text-slate-900">
-                            {record.employee ? `${record.employee.firstName} ${record.employee.lastName}` : "Unknown Employee"}
+                            {record.employee ? `${record.employee.firstName_c || ''} ${record.employee.lastName_c || ''}` : "Unknown Employee"}
                           </div>
                           <div className="text-sm text-slate-500">
-                            {record.employee?.department}
+                            {record.employee?.department_c}
                           </div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+<td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-slate-900">
-                        {formatCurrency(record.basicSalary)}
+                        {formatCurrency(record.basicSalary_c || 0)}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-green-600 font-medium">
-                        +{formatCurrency(record.allowances)}
+                        +{formatCurrency(record.allowances_c || 0)}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-red-600 font-medium">
-                        -{formatCurrency(record.deductions)}
+                        -{formatCurrency(record.deductions_c || 0)}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-bold text-slate-900">
-                        {formatCurrency(record.netSalary)}
+                        {formatCurrency(record.netSalary_c || 0)}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <Button
                         size="sm"
                         variant="outline"
-                        onClick={() => handleGeneratePayslip(record.employeeId, record.month)}
+                        onClick={() => handleGeneratePayslip(record.employeeId_c?.Id || record.employeeId_c, record.month_c)}
                       >
                         <ApperIcon name="FileText" size={14} className="mr-1" />
                         Payslip
@@ -336,11 +337,11 @@ const Payroll = () => {
                 <div className="grid grid-cols-2 gap-6">
                   <div>
                     <h4 className="font-semibold text-slate-900 mb-2">Employee Details</h4>
-                    <div className="space-y-1 text-sm text-slate-600">
-                      <p><span className="font-medium">Name:</span> {selectedPayslip.employee.firstName} {selectedPayslip.employee.lastName}</p>
-                      <p><span className="font-medium">ID:</span> {selectedPayslip.employee.employeeId}</p>
-                      <p><span className="font-medium">Department:</span> {selectedPayslip.employee.department}</p>
-                      <p><span className="font-medium">Role:</span> {selectedPayslip.employee.role}</p>
+<div className="space-y-1 text-sm text-slate-600">
+                      <p><span className="font-medium">Name:</span> {selectedPayslip.employee.firstName_c} {selectedPayslip.employee.lastName_c}</p>
+                      <p><span className="font-medium">ID:</span> {selectedPayslip.employee.employeeId_c}</p>
+                      <p><span className="font-medium">Department:</span> {selectedPayslip.employee.department_c}</p>
+                      <p><span className="font-medium">Role:</span> {selectedPayslip.employee.role_c}</p>
                     </div>
                   </div>
                   
@@ -358,24 +359,24 @@ const Payroll = () => {
                   <div>
                     <h4 className="font-semibold text-slate-900 mb-3">Earnings</h4>
                     <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
+<div className="flex justify-between text-sm">
                         <span>Basic Salary</span>
-                        <span className="font-medium">{formatCurrency(selectedPayslip.record.basicSalary)}</span>
+                        <span className="font-medium">{formatCurrency(selectedPayslip.record.basicSalary_c || 0)}</span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span>Allowances</span>
-                        <span className="font-medium text-green-600">{formatCurrency(selectedPayslip.record.allowances)}</span>
+                        <span className="font-medium text-green-600">{formatCurrency(selectedPayslip.record.allowances_c || 0)}</span>
                       </div>
-                      {selectedPayslip.record.overtimePay > 0 && (
+                      {(selectedPayslip.record.overtimePay_c || 0) > 0 && (
                         <div className="flex justify-between text-sm">
                           <span>Overtime Pay</span>
-                          <span className="font-medium text-green-600">{formatCurrency(selectedPayslip.record.overtimePay)}</span>
+                          <span className="font-medium text-green-600">{formatCurrency(selectedPayslip.record.overtimePay_c || 0)}</span>
                         </div>
                       )}
                       <div className="border-t border-slate-200 pt-2">
                         <div className="flex justify-between font-semibold">
                           <span>Gross Salary</span>
-                          <span>{formatCurrency(selectedPayslip.record.basicSalary + selectedPayslip.record.allowances + (selectedPayslip.record.overtimePay || 0))}</span>
+                          <span>{formatCurrency((selectedPayslip.record.basicSalary_c || 0) + (selectedPayslip.record.allowances_c || 0) + (selectedPayslip.record.overtimePay_c || 0))}</span>
                         </div>
                       </div>
                     </div>
@@ -383,23 +384,23 @@ const Payroll = () => {
                   
                   <div>
                     <h4 className="font-semibold text-slate-900 mb-3">Deductions</h4>
-                    <div className="space-y-2">
+<div className="space-y-2">
                       <div className="flex justify-between text-sm">
                         <span>Tax Deduction</span>
-                        <span className="font-medium text-red-600">{formatCurrency(selectedPayslip.record.taxDeduction || 0)}</span>
+                        <span className="font-medium text-red-600">{formatCurrency(selectedPayslip.record.taxDeduction_c || 0)}</span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span>Insurance</span>
-                        <span className="font-medium text-red-600">{formatCurrency(selectedPayslip.record.insuranceDeduction || 0)}</span>
+                        <span className="font-medium text-red-600">{formatCurrency(selectedPayslip.record.insuranceDeduction_c || 0)}</span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span>Provident Fund</span>
-                        <span className="font-medium text-red-600">{formatCurrency(selectedPayslip.record.providentFund || 0)}</span>
+                        <span className="font-medium text-red-600">{formatCurrency(selectedPayslip.record.providentFund_c || 0)}</span>
                       </div>
                       <div className="border-t border-slate-200 pt-2">
                         <div className="flex justify-between font-semibold">
                           <span>Total Deductions</span>
-                          <span className="text-red-600">{formatCurrency(selectedPayslip.record.deductions)}</span>
+                          <span className="text-red-600">{formatCurrency(selectedPayslip.record.deductions_c || 0)}</span>
                         </div>
                       </div>
                     </div>
@@ -409,7 +410,7 @@ const Payroll = () => {
                 <div className="border-t border-slate-200 pt-4">
                   <div className="flex justify-between text-lg font-bold">
                     <span>Net Salary</span>
-                    <span className="text-primary-600">{formatCurrency(selectedPayslip.record.netSalary)}</span>
+                    <span className="text-primary-600">{formatCurrency(selectedPayslip.record.netSalary_c || 0)}</span>
                   </div>
                 </div>
                 

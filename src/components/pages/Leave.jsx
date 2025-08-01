@@ -221,38 +221,38 @@ const Leave = () => {
                 />
               ) : (
                 leaveRequests.map((request) => (
-                  <div key={request.Id} className="flex items-center justify-between p-4 hover:bg-slate-50 rounded-lg transition-colors duration-200">
+<div key={request.Id} className="flex items-center justify-between p-4 hover:bg-slate-50 rounded-lg transition-colors duration-200">
                     <div className="flex items-center gap-4">
                       <Avatar
-                        src={request.employee?.avatar}
-                        fallback={request.employee ? `${request.employee.firstName[0]}${request.employee.lastName[0]}` : "??"}
-                        alt={request.employee ? `${request.employee.firstName} ${request.employee.lastName}` : "Unknown"}
+                        src={request.employee?.avatar_c}
+                        fallback={request.employee ? `${request.employee.firstName_c?.[0] || ''}${request.employee.lastName_c?.[0] || ''}` : "??"}
+                        alt={request.employee ? `${request.employee.firstName_c || ''} ${request.employee.lastName_c || ''}` : "Unknown"}
                         size="md"
                       />
                       <div>
                         <p className="font-medium text-slate-900">
-                          {request.employee ? `${request.employee.firstName} ${request.employee.lastName}` : "Unknown Employee"}
+                          {request.employee ? `${request.employee.firstName_c || ''} ${request.employee.lastName_c || ''}` : "Unknown Employee"}
                         </p>
-                        <p className="text-sm text-slate-600">{request.type}</p>
+                        <p className="text-sm text-slate-600">{request.type_c}</p>
                         <p className="text-sm text-slate-500">
-                          {format(new Date(request.startDate), "MMM dd")} - {format(new Date(request.endDate), "MMM dd, yyyy")}
+                          {format(new Date(request.startDate_c), "MMM dd")} - {format(new Date(request.endDate_c), "MMM dd, yyyy")}
                         </p>
                         <p className="text-xs text-slate-400 mt-1 max-w-md truncate">
-                          {request.reason}
+                          {request.reason_c}
                         </p>
                       </div>
                     </div>
                     
-                    <div className="text-right">
-                      <Badge variant={getLeaveStatusVariant(request.status)}>
-                        <ApperIcon name={getLeaveStatusIcon(request.status)} size={12} className="mr-1" />
-                        {request.status}
+<div className="text-right">
+                      <Badge variant={getLeaveStatusVariant(request.status_c)}>
+                        <ApperIcon name={getLeaveStatusIcon(request.status_c)} size={12} className="mr-1" />
+                        {request.status_c}
                       </Badge>
                       <p className="text-sm text-slate-500 mt-1">
-                        {request.days} day{request.days !== 1 ? "s" : ""}
+                        {request.days_c} day{request.days_c !== 1 ? "s" : ""}
                       </p>
                       <p className="text-xs text-slate-400">
-                        {format(new Date(request.requestDate), "MMM dd")}
+                        {format(new Date(request.requestDate_c), "MMM dd")}
                       </p>
                     </div>
                   </div>
@@ -271,24 +271,24 @@ const Leave = () => {
                 />
               ) : (
                 pendingRequests.map((request) => (
-                  <div key={request.Id} className="flex items-center justify-between p-4 border border-yellow-200 bg-yellow-50 rounded-lg">
+<div key={request.Id} className="flex items-center justify-between p-4 border border-yellow-200 bg-yellow-50 rounded-lg">
                     <div className="flex items-center gap-4">
                       <Avatar
-                        src={request.employee?.avatar}
-                        fallback={request.employee ? `${request.employee.firstName[0]}${request.employee.lastName[0]}` : "??"}
-                        alt={request.employee ? `${request.employee.firstName} ${request.employee.lastName}` : "Unknown"}
+                        src={request.employee?.avatar_c}
+                        fallback={request.employee ? `${request.employee.firstName_c?.[0] || ''}${request.employee.lastName_c?.[0] || ''}` : "??"}
+                        alt={request.employee ? `${request.employee.firstName_c || ''} ${request.employee.lastName_c || ''}` : "Unknown"}
                         size="md"
                       />
                       <div>
                         <p className="font-medium text-slate-900">
-                          {request.employee ? `${request.employee.firstName} ${request.employee.lastName}` : "Unknown Employee"}
+                          {request.employee ? `${request.employee.firstName_c || ''} ${request.employee.lastName_c || ''}` : "Unknown Employee"}
                         </p>
-                        <p className="text-sm text-slate-600">{request.type}</p>
+                        <p className="text-sm text-slate-600">{request.type_c}</p>
                         <p className="text-sm text-slate-500">
-                          {format(new Date(request.startDate), "MMM dd")} - {format(new Date(request.endDate), "MMM dd, yyyy")}
+                          {format(new Date(request.startDate_c), "MMM dd")} - {format(new Date(request.endDate_c), "MMM dd, yyyy")}
                         </p>
                         <p className="text-xs text-slate-400 mt-1 max-w-md">
-                          {request.reason}
+                          {request.reason_c}
                         </p>
                       </div>
                     </div>

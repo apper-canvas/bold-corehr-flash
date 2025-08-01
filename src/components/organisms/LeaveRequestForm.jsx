@@ -52,12 +52,14 @@ const LeaveRequestForm = ({ onSuccess, onCancel, employeeId = "1" }) => {
     if (!validateForm()) return
     
     setLoading(true)
-    try {
+try {
       await leaveService.create({
         ...formData,
         employeeId,
-        startDate: new Date(formData.startDate).toISOString(),
-        endDate: new Date(formData.endDate).toISOString()
+        type_c: formData.type,
+        startDate_c: new Date(formData.startDate).toISOString(),
+        endDate_c: new Date(formData.endDate).toISOString(),
+        reason_c: formData.reason
       })
       
       toast.success("Leave request submitted successfully!")

@@ -122,36 +122,36 @@ const Dashboard = () => {
                 todayAttendance.map((record) => (
                   <div key={record.Id} className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition-colors duration-200">
                     <div className="flex items-center gap-3">
-                      <Avatar
-                        src={record.employee?.avatar}
-                        fallback={record.employee ? `${record.employee.firstName[0]}${record.employee.lastName[0]}` : "??"}
-                        alt={record.employee ? `${record.employee.firstName} ${record.employee.lastName}` : "Unknown"}
-                        size="sm"
-                      />
-                      <div>
-                        <p className="font-medium text-slate-900">
-                          {record.employee ? `${record.employee.firstName} ${record.employee.lastName}` : "Unknown Employee"}
-                        </p>
-                        <p className="text-sm text-slate-500">
-                          {record.clockIn ? format(new Date(record.clockIn), "h:mm a") : "Not clocked in"}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <Badge variant={
-                        record.status === "Present" ? "success" :
-                        record.status === "Clocked In" ? "info" :
-                        record.status === "Absent" ? "error" : "neutral"
-                      }>
-                        {record.status}
-                      </Badge>
-                      {record.totalHours > 0 && (
-                        <p className="text-sm text-slate-500 mt-1">
-                          {record.totalHours}h
-                        </p>
-                      )}
+<Avatar
+                      src={record.employee?.avatar_c}
+                      fallback={record.employee ? `${record.employee.firstName_c?.[0] || ''}${record.employee.lastName_c?.[0] || ''}` : "??"}
+                      alt={record.employee ? `${record.employee.firstName_c || ''} ${record.employee.lastName_c || ''}` : "Unknown"}
+                      size="sm"
+                    />
+                    <div>
+                      <p className="font-medium text-slate-900">
+                        {record.employee ? `${record.employee.firstName_c || ''} ${record.employee.lastName_c || ''}` : "Unknown Employee"}
+                      </p>
+                      <p className="text-sm text-slate-500">
+                        {record.clockIn_c ? format(new Date(record.clockIn_c), "h:mm a") : "Not clocked in"}
+                      </p>
                     </div>
                   </div>
+<div className="text-right">
+                    <Badge variant={
+                      record.status_c === "Present" ? "success" :
+                      record.status_c === "Clocked In" ? "info" :
+                      record.status_c === "Absent" ? "error" : "neutral"
+                    }>
+                      {record.status_c}
+                    </Badge>
+                    {(record.totalHours_c || 0) > 0 && (
+                      <p className="text-sm text-slate-500 mt-1">
+                        {record.totalHours_c}h
+                      </p>
+                    )}
+                  </div>
+                </div>
                 ))
               )}
             </div>
@@ -177,29 +177,29 @@ const Dashboard = () => {
               pendingLeaves.slice(0, 5).map((leave) => (
                 <div key={leave.Id} className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition-colors duration-200">
                   <div className="flex items-center gap-3">
-                    <Avatar
-                      src={leave.employee?.avatar}
-                      fallback={leave.employee ? `${leave.employee.firstName[0]}${leave.employee.lastName[0]}` : "??"}
-                      alt={leave.employee ? `${leave.employee.firstName} ${leave.employee.lastName}` : "Unknown"}
-                      size="sm"
-                    />
-                    <div>
-                      <p className="font-medium text-slate-900">
-                        {leave.employee ? `${leave.employee.firstName} ${leave.employee.lastName}` : "Unknown Employee"}
-                      </p>
-                      <p className="text-sm text-slate-500">{leave.type}</p>
-                      <p className="text-xs text-slate-400">
-                        {format(new Date(leave.startDate), "MMM dd")} - {format(new Date(leave.endDate), "MMM dd")}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <Badge variant="warning">Pending</Badge>
-                    <p className="text-sm text-slate-500 mt-1">
-                      {leave.days} day{leave.days !== 1 ? "s" : ""}
+<Avatar
+                    src={leave.employee?.avatar_c}
+                    fallback={leave.employee ? `${leave.employee.firstName_c?.[0] || ''}${leave.employee.lastName_c?.[0] || ''}` : "??"}
+                    alt={leave.employee ? `${leave.employee.firstName_c || ''} ${leave.employee.lastName_c || ''}` : "Unknown"}
+                    size="sm"
+                  />
+                  <div>
+                    <p className="font-medium text-slate-900">
+                      {leave.employee ? `${leave.employee.firstName_c || ''} ${leave.employee.lastName_c || ''}` : "Unknown Employee"}
+                    </p>
+                    <p className="text-sm text-slate-500">{leave.type_c}</p>
+                    <p className="text-xs text-slate-400">
+                      {format(new Date(leave.startDate_c), "MMM dd")} - {format(new Date(leave.endDate_c), "MMM dd")}
                     </p>
                   </div>
                 </div>
+                <div className="text-right">
+                  <Badge variant="warning">Pending</Badge>
+                  <p className="text-sm text-slate-500 mt-1">
+                    {leave.days_c} day{leave.days_c !== 1 ? "s" : ""}
+                  </p>
+                </div>
+              </div>
               ))
             )}
           </div>

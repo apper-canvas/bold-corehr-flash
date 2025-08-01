@@ -7,10 +7,9 @@ import ApperIcon from "@/components/ApperIcon"
 import { format } from "date-fns"
 
 const EmployeeTable = ({ employees, onEdit, onDelete }) => {
-  const navigate = useNavigate()
+const navigate = useNavigate()
   const [sortField, setSortField] = useState("firstName")
   const [sortDirection, setSortDirection] = useState("asc")
-
   const handleSort = (field) => {
     if (sortField === field) {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc")
@@ -20,18 +19,25 @@ const EmployeeTable = ({ employees, onEdit, onDelete }) => {
     }
   }
 
-  const sortedEmployees = [...employees].sort((a, b) => {
-    let aValue = a[sortField]
-    let bValue = b[sortField]
+const sortedEmployees = [...employees].sort((a, b) => {
+    let fieldName = sortField
+    if (sortField === "firstName") fieldName = "firstName_c"
+    if (sortField === "department") fieldName = "department_c"
+    if (sortField === "role") fieldName = "role_c"
+    if (sortField === "joinDate") fieldName = "joinDate_c"
+    if (sortField === "status") fieldName = "status_c"
+    
+    let aValue = a[fieldName]
+    let bValue = b[fieldName]
 
     if (sortField === "joinDate") {
-      aValue = new Date(aValue)
-      bValue = new Date(bValue)
+      aValue = aValue ? new Date(aValue) : new Date(0)
+      bValue = bValue ? new Date(bValue) : new Date(0)
     }
 
     if (typeof aValue === "string") {
       aValue = aValue.toLowerCase()
-      bValue = bValue.toLowerCase()
+      bValue = (bValue || "").toLowerCase()
     }
 
     if (sortDirection === "asc") {
@@ -91,37 +97,37 @@ const EmployeeTable = ({ employees, onEdit, onDelete }) => {
                 className="hover:bg-slate-50 transition-colors duration-200 cursor-pointer"
                 onClick={() => navigate(`/employees/${employee.Id}`)}
               >
-                <td className="px-6 py-4 whitespace-nowrap">
+<td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <Avatar
-                      src={employee.avatar}
-                      fallback={`${employee.firstName[0]}${employee.lastName[0]}`}
-                      alt={`${employee.firstName} ${employee.lastName}`}
+                      src={employee.avatar_c}
+                      fallback={`${employee.firstName_c?.[0] || ''}${employee.lastName_c?.[0] || ''}`}
+                      alt={`${employee.firstName_c || ''} ${employee.lastName_c || ''}`}
                       size="md"
                     />
                     <div className="ml-4">
                       <div className="text-sm font-medium text-slate-900">
-                        {employee.firstName} {employee.lastName}
+                        {employee.firstName_c || ''} {employee.lastName_c || ''}
                       </div>
-                      <div className="text-sm text-slate-500">{employee.email}</div>
-                      <div className="text-xs text-slate-400">{employee.employeeId}</div>
+                      <div className="text-sm text-slate-500">{employee.email_c}</div>
+                      <div className="text-xs text-slate-400">{employee.employeeId_c}</div>
                     </div>
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-slate-900">{employee.department}</div>
+<td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-slate-900">{employee.department_c}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-slate-900">{employee.role}</div>
+                  <div className="text-sm text-slate-900">{employee.role_c}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-slate-900">
-                    {format(new Date(employee.joinDate), "MMM dd, yyyy")}
+                    {employee.joinDate_c ? format(new Date(employee.joinDate_c), "MMM dd, yyyy") : "N/A"}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <Badge variant={getStatusVariant(employee.status)}>
-                    {employee.status}
+                  <Badge variant={getStatusVariant(employee.status_c)}>
+                    {employee.status_c}
                   </Badge>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

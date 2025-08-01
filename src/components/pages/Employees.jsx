@@ -93,8 +93,8 @@ const Employees = () => {
     setSelectedDepartment("")
     setSelectedStatus("")
     setSelectedRole("")
-  }
-
+}
+  
   if (loading) return <Loading />
   if (error) return <Error message={error} onRetry={loadEmployees} />
 
@@ -105,7 +105,6 @@ const Employees = () => {
     { value: "Inactive", label: "Inactive" }
   ]
   const roleOptions = roles.map(role => ({ value: role, label: role }))
-
   const hasActiveFilters = searchQuery || selectedDepartment || selectedStatus || selectedRole
 
   return (
